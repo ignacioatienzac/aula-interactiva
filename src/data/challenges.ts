@@ -1,10 +1,20 @@
-export interface Challenge {
+interface ChallengeBase {
   stopIndex: number;
   locationName: string;
   icon: string;
+}
+
+export interface TextInputChallenge extends ChallengeBase {
+  type: "text-input";
   challengeText: string;
   correctAnswer: string;
 }
+
+export interface GrammarCategoriesChallenge extends ChallengeBase {
+  type: "grammar-categories";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -30,13 +40,13 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 1,
     locationName: "Pasillo sótano CPD",
     icon: "🚶",
-    challengeText: "[Reto #1 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "grammar-categories",
   },
   {
     stopIndex: 2,
     locationName: "Recepción CPD",
     icon: "🏢",
+    type: "text-input",
     challengeText: "[Reto #2 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -44,6 +54,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 3,
     locationName: "Salida exterior CPD",
     icon: "🌳",
+    type: "text-input",
     challengeText: "[Reto #3 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -51,6 +62,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 4,
     locationName: "Plaza entre edificios",
     icon: "⛲",
+    type: "text-input",
     challengeText: "[Reto #4 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -58,6 +70,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 5,
     locationName: "Zona del café",
     icon: "☕",
+    type: "text-input",
     challengeText: "[Reto #5 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -65,6 +78,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 6,
     locationName: "Entrada edificio CRT",
     icon: "🏛️",
+    type: "text-input",
     challengeText: "[Reto #6 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -72,6 +86,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 7,
     locationName: "Recepción CRT",
     icon: "🛎️",
+    type: "text-input",
     challengeText: "[Reto #7 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -79,6 +94,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 8,
     locationName: "Ascensor CRT",
     icon: "🛗",
+    type: "text-input",
     challengeText: "[Reto #8 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -86,6 +102,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 9,
     locationName: "Pasillo piso 5",
     icon: "🔦",
+    type: "text-input",
     challengeText: "[Reto #9 por definir]",
     correctAnswer: "[respuesta]",
   },
@@ -93,6 +110,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 10,
     locationName: "Puerta CRT-5.22",
     icon: "🔐",
+    type: "text-input",
     challengeText: "[Reto #10 por definir — el último obstáculo antes de entrar]",
     correctAnswer: "[respuesta]",
   },

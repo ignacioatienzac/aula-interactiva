@@ -94,6 +94,21 @@ export function useGameState() {
     []
   );
 
+  const completeChallenge = useCallback((challengeIndex: number) => {
+    setState((prev) => {
+      const newCompleted = [...prev.completedChallenges];
+      newCompleted[challengeIndex] = true;
+      return {
+        ...prev,
+        completedChallenges: newCompleted,
+        currentStop: prev.currentStop + 1,
+        modalOpen: false,
+        activeStop: null,
+        answerStatus: null,
+      };
+    });
+  }, []);
+
   const resetGame = useCallback(() => {
     setState(initialState);
   }, []);
@@ -105,6 +120,7 @@ export function useGameState() {
     openModal,
     closeModal,
     submitAnswer,
+    completeChallenge,
     resetGame,
   };
 }

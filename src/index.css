@@ -103,4 +103,29 @@ All colors MUST be HSL.
   .animate-fade-in {
     animation: fade-in 0.3s ease-out;
   }
+
+  /* Flicker — power-cut effect on mission failure */
+  @keyframes flicker {
+    0%   { opacity: 1; }
+    15%  { opacity: 0.05; }
+    30%  { opacity: 0.9; }
+    45%  { opacity: 0.05; }
+    60%  { opacity: 0.85; }
+    75%  { opacity: 0.05; }
+    100% { opacity: 1; }
+  }
+
+  .animate-flicker {
+    animation: flicker 0.5s ease-in-out;
+  }
+
+  /* Scanner line — red horizontal sweep on failure modal */
+  @keyframes scanner {
+    0%   { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+
+  .animate-scanner {
+    animation: scanner 2s linear infinite;
+  }
 }

@@ -8,6 +8,7 @@ interface GameContextValue {
   openModal: (stopIndex: number) => void;
   closeModal: () => void;
   submitAnswer: (challengeIndex: number, answer: string, correctAnswer: string) => void;
+  completeChallenge: (challengeIndex: number) => void;
   resetGame: () => void;
 }
 

@@ -1,13 +1,33 @@
 import { useState } from "react";
 import { Challenge } from "@/data/challenges";
 import { useGameContext } from "@/context/GameContext";
+import GrammarCategoryChallenge from "@/components/challenges/GrammarCategoryChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
   onClose: () => void;
 }
 
-const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
+// ─── Grammar-categories routing ─────────────────────────────────────────────
+const GrammarRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+
+  const handleComplete = () => {
+    completeChallenge(challenge.stopIndex - 1);
+  };
+
+  return (
+    <GrammarCategoryChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
+// ─── Text-input routing ──────────────────────────────────────────────────────
+const TextInputModal = ({ challenge, onClose }: ChallengeModalProps & { challenge: Extract<Challenge, { type: 'text-input' }> }) => {
   const { state, submitAnswer } = useGameContext();
   const [inputValue, setInputValue] = useState("");
 
@@ -119,6 +139,14 @@ const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
       </div>
     </div>
   );
+};
+
+// ─── Main router component ────────────────────────────────────────────────────
+const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
+  if (challenge.type === "grammar-categories") {
+    return <GrammarRouter challenge={challenge} onClose={onClose} />;
+  }
+  return <TextInputModal challenge={challenge} onClose={onClose} />;
 };
 
 export default ChallengeModal;
