@@ -47,6 +47,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        desk: {
+          DEFAULT: "hsl(var(--desk))",
+          active: "hsl(var(--desk-active))",
+          foreground: "hsl(var(--desk-foreground))",
+        },
+        chalkboard: "hsl(var(--chalkboard))",
+        chalk: "hsl(var(--chalk))",
+        player: {
+          1: "hsl(var(--player-1))",
+          2: "hsl(var(--player-2))",
+          3: "hsl(var(--player-3))",
+          4: "hsl(var(--player-4))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
