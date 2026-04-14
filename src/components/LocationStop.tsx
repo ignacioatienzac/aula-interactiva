@@ -42,9 +42,7 @@ const LocationStop = ({
       title={label}
     >
       <div className={`relative rounded-full border-2 flex items-center justify-center transition-all duration-300 ${circleSize} ${circleStyle}`}>
-        {status === "completed" ? (
-          <span className="text-heist-green font-bold">✓</span>
-        ) : status === "locked" ? (
+        {status === "locked" ? (
           <span>🔒</span>
         ) : (
           <span>{icon}</span>
@@ -59,7 +57,7 @@ const LocationStop = ({
               ${status === "locked" ? "bg-gray-700 text-gray-500 border-gray-600" : ""}
             `}
           >
-            {index}
+            {status === "completed" ? "✓" : index}
           </span>
         )}
 

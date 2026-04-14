@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { CATEGORY_LABELS, GrammarCategory, pickRandomWords, WordEntry } from "@/data/grammarWords";
 
 const TOTAL_WORDS = 15;
-const TOTAL_TIME = 45;
+const TOTAL_TIME = 90;
 const MAX_STRIKES = 3;
 
 const CATEGORY_ORDER: GrammarCategory[] = [
@@ -171,7 +171,7 @@ const GrammarCategoryChallenge = ({ locationName, icon, onComplete, onClose }: P
           {/* Timer */}
           <div className={`flex items-center gap-1.5 font-bold tabular-nums transition-colors duration-300 ${isLow ? "text-heist-red animate-pulse" : "text-gray-300"}`}>
             <span>🕐</span>
-            <span className="text-lg">{timeLeft}s</span>
+            <span className="text-lg">{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}</span>
           </div>
 
           {/* Lives */}
