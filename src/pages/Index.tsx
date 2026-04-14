@@ -1,7 +1,7 @@
-import GameBoard from "@/components/GameBoard";
+import EscapeMap from "@/components/EscapeMap";
 
 const Index = () => {
-  return <GameBoard />;
+  return <EscapeMap />;
 };
 
 export default Index;

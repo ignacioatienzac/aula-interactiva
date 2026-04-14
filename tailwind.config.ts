@@ -60,6 +60,13 @@ export default {
           3: "hsl(var(--player-3))",
           4: "hsl(var(--player-4))",
         },
+        heist: {
+          bg: "hsl(var(--heist-bg))",
+          red: "hsl(var(--heist-red))",
+          gold: "hsl(var(--heist-gold))",
+          green: "hsl(var(--heist-green))",
+          grid: "hsl(var(--heist-grid))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

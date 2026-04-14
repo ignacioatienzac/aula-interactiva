@@ -8,47 +8,44 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 150 20% 18%;
+    --background: 230 15% 6%;
     --foreground: 45 30% 90%;
 
-    --card: 150 15% 22%;
+    --card: 230 12% 10%;
     --card-foreground: 45 30% 90%;
 
-    --popover: 150 15% 22%;
+    --popover: 230 12% 10%;
     --popover-foreground: 45 30% 90%;
 
-    --primary: 45 70% 55%;
-    --primary-foreground: 150 20% 12%;
+    --primary: 45 90% 55%;
+    --primary-foreground: 230 15% 6%;
 
-    --secondary: 150 12% 28%;
+    --secondary: 230 10% 15%;
     --secondary-foreground: 45 30% 90%;
 
-    --muted: 150 10% 25%;
-    --muted-foreground: 150 10% 55%;
+    --muted: 230 10% 12%;
+    --muted-foreground: 230 10% 45%;
 
-    --accent: 0 65% 55%;
+    --accent: 0 80% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 150 10% 30%;
-    --input: 150 10% 30%;
-    --ring: 45 70% 55%;
+    --border: 230 10% 18%;
+    --input: 230 10% 18%;
+    --ring: 45 90% 55%;
 
     --radius: 0.5rem;
 
-    --desk: 30 40% 35%;
-    --desk-active: 45 60% 45%;
-    --desk-foreground: 45 30% 90%;
-    --chalkboard: 150 25% 20%;
-    --chalk: 45 20% 85%;
+    /* Heist theme */
+    --heist-bg: 230 15% 6%;
+    --heist-red: 0 80% 55%;
+    --heist-gold: 45 90% 55%;
+    --heist-green: 140 70% 45%;
+    --heist-grid: 230 10% 14%;
 
-    --player-1: 0 70% 60%;
-    --player-2: 210 70% 55%;
-    --player-3: 120 50% 45%;
-    --player-4: 45 80% 55%;
-
+    /* Keep legacy sidebar vars */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -67,5 +64,43 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Tactical grid background */
+  .laser-grid {
+    background-image:
+      linear-gradient(hsl(var(--heist-grid)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--heist-grid)) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Mission-style typography */
+  .mission-text {
+    @apply font-black uppercase tracking-widest;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Shake animation for wrong answers */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+  }
+
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
   }
 }
