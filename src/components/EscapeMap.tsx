@@ -140,17 +140,26 @@ const EscapeMap = () => {
           </div>
         </div>
 
-        {/* Progress */}
-        <div className="flex flex-col items-end gap-1">
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest">
-            Objetivos: {Math.min(currentStop, 10)}/10
-          </p>
-          <div className="w-32 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-heist-gold transition-all duration-500"
-              style={{ width: `${(Math.min(currentStop, 10) / 10) * 100}%` }}
-            />
+        {/* Progress + back button */}
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col items-end gap-1">
+            <p className="text-[10px] text-gray-500 uppercase tracking-widest">
+              Objetivos: {Math.min(currentStop - 1, 10)}/10
+            </p>
+            <div className="w-32 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-heist-gold transition-all duration-500"
+                style={{ width: `${(Math.min(currentStop - 1, 10) / 10) * 100}%` }}
+              />
+            </div>
           </div>
+          <button
+            onClick={() => navigate("/")}
+            title="Volver al menú"
+            className="text-gray-500 hover:text-heist-red text-xs uppercase tracking-widest font-bold border border-gray-700 hover:border-heist-red px-2 py-1 transition-all duration-200"
+          >
+            ✕ Salir
+          </button>
         </div>
       </header>
 

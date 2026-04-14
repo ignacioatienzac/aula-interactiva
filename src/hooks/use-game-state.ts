@@ -22,7 +22,7 @@ export interface GameState {
 const initialState: GameState = {
   playerName: "",
   selectedAvatar: 0,
-  currentStop: 0,
+  currentStop: 1,
   completedChallenges: Array(10).fill(false),
   modalOpen: false,
   activeStop: null,
