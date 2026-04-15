@@ -26,7 +26,11 @@ export interface NounsChallenge extends ChallengeBase {
   type: "nouns";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge;
+export interface AdjectivesChallenge extends ChallengeBase {
+  type: "adjectives";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -76,9 +80,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 5,
     locationName: "Zona del café",
     icon: "☕",
-    type: "text-input",
-    challengeText: "[Reto #5 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "adjectives",
   },
   {
     stopIndex: 6,

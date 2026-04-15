@@ -86,7 +86,7 @@ export const DETERMINANTS_EXERCISE: DeterminantsExercise = {
     { id: 7,  hint: "artículo",                       accepted: ["un"] },
     { id: 8,  hint: "posesivo",                       accepted: ["mi"] },
     { id: 9,  hint: "demostrativo",                   accepted: ["aquella", "esa"] },
-    { id: 10, hint: "posesivo",                       accepted: ["su"] },
+    { id: 10, hint: "posesivo",                       accepted: ["su", "mi"] },
     { id: 11, hint: "demostrativo con valor despectivo", accepted: ["esa", "aquella"] },
     { id: 12, hint: "posesivo",                       accepted: ["su"] },
     { id: 13, hint: "indefinido",                     accepted: ["muchos", "muchísimos", "bastantes"] },
