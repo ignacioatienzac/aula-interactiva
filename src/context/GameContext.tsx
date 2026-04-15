@@ -10,6 +10,8 @@ interface GameContextValue {
   submitAnswer: (challengeIndex: number, answer: string, correctAnswer: string) => void;
   completeChallenge: (challengeIndex: number) => void;
   resetGame: () => void;
+  /** DEV ONLY */
+  debugSetStop: (n: number) => void;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);

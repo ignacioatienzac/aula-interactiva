@@ -113,6 +113,11 @@ export function useGameState() {
     setState(initialState);
   }, []);
 
+  /** DEV ONLY — jump to any stop for testing */
+  const debugSetStop = useCallback((n: number) => {
+    setState((prev) => ({ ...prev, currentStop: Math.max(1, Math.min(11, n)), modalOpen: false, activeStop: null }));
+  }, []);
+
   return {
     state,
     setPlayerName,
@@ -122,5 +127,6 @@ export function useGameState() {
     submitAnswer,
     completeChallenge,
     resetGame,
+    debugSetStop,
   };
 }

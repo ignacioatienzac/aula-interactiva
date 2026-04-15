@@ -13,7 +13,7 @@ const ROW_2 = [4, 5, 6, 7];
 const ROW_3 = [8, 9, 10, 11];
 
 const EscapeMap = () => {
-  const { state, openModal, closeModal } = useGameContext();
+  const { state, openModal, closeModal, debugSetStop } = useGameContext();
   const navigate = useNavigate();
   const { currentStop, modalOpen, activeStop, completedChallenges, playerName, selectedAvatar } = state;
 
@@ -32,7 +32,7 @@ const EscapeMap = () => {
   const avatar = AVATARS[selectedAvatar];
 
   const renderRow = (indices: number[], reversed: boolean) => (
-    <div className={`flex items-center gap-2 sm:gap-4 ${reversed ? "flex-row-reverse" : "flex-row"}`}>
+    <div className={`flex items-center gap-2 sm:gap-8 ${reversed ? "flex-row-reverse" : "flex-row"}`}>
       {indices.map((stopIdx, i) => {
         const stop = STOPS[stopIdx];
         const status = getStopStatus(stopIdx);
@@ -42,7 +42,7 @@ const EscapeMap = () => {
         const connectorStatus = getStopStatus(stopIdx);
 
         return (
-          <div key={stopIdx} className={`flex items-center gap-2 sm:gap-4 ${reversed ? "flex-row-reverse" : "flex-row"}`}>
+          <div key={stopIdx} className={`flex items-center gap-2 sm:gap-8 ${reversed ? "flex-row-reverse" : "flex-row"}`}>
             <LocationStop
               index={stopIdx}
               label={stop.label}
@@ -55,7 +55,7 @@ const EscapeMap = () => {
             />
             {showConnector && (
               <div
-                className={`h-0.5 w-8 sm:w-12 flex-shrink-0 transition-all duration-500
+                className={`h-0.5 w-8 sm:w-28 flex-shrink-0 transition-all duration-500
                   ${connectorStatus === "completed" ? "bg-heist-green" : ""}
                   ${connectorStatus === "active" ? "bg-heist-red" : ""}
                   ${connectorStatus === "locked" ? "bg-gray-700" : ""}
@@ -72,9 +72,9 @@ const EscapeMap = () => {
   const VerticalConnector = ({ rowEndStopIdx }: { rowEndStopIdx: number }) => {
     const status = getStopStatus(rowEndStopIdx);
     return (
-      <div className="flex justify-end pr-4 sm:pr-8">
+      <div className="flex justify-end pr-4 sm:pr-10">
         <div
-          className={`w-0.5 h-8 transition-all duration-500
+          className={`w-0.5 h-8 sm:h-14 transition-all duration-500
             ${status === "completed" ? "bg-heist-green" : "bg-gray-700"}
           `}
         />
@@ -85,9 +85,9 @@ const EscapeMap = () => {
   const VerticalConnectorLeft = ({ rowEndStopIdx }: { rowEndStopIdx: number }) => {
     const status = getStopStatus(rowEndStopIdx);
     return (
-      <div className="flex justify-start pl-4 sm:pl-8">
+      <div className="flex justify-start pl-4 sm:pl-10">
         <div
-          className={`w-0.5 h-8 transition-all duration-500
+          className={`w-0.5 h-8 sm:h-14 transition-all duration-500
             ${status === "completed" ? "bg-heist-green" : "bg-gray-700"}
           `}
         />
@@ -189,6 +189,26 @@ const EscapeMap = () => {
       {modalOpen && activeChallenge && (
         <ChallengeModal challenge={activeChallenge} onClose={closeModal} />
       )}
+
+      {/* DEV: prev/next navigation buttons — hidden on mobile */}
+      <div className="hidden sm:flex fixed bottom-6 right-6 z-40 items-center gap-2">
+        <span className="text-[9px] text-gray-600 uppercase tracking-widest mr-1">DEV</span>
+        <button
+          onClick={() => debugSetStop(currentStop - 1)}
+          disabled={currentStop <= 1}
+          className="px-3 py-2 border border-gray-700 text-gray-400 hover:border-heist-gold hover:text-heist-gold text-xs font-bold uppercase tracking-widest transition-all duration-150 disabled:opacity-25 disabled:cursor-not-allowed"
+        >
+          ◀ Prev
+        </button>
+        <span className="text-[10px] text-gray-600 tabular-nums">{currentStop}</span>
+        <button
+          onClick={() => debugSetStop(currentStop + 1)}
+          disabled={currentStop >= 11}
+          className="px-3 py-2 border border-gray-700 text-gray-400 hover:border-heist-gold hover:text-heist-gold text-xs font-bold uppercase tracking-widest transition-all duration-150 disabled:opacity-25 disabled:cursor-not-allowed"
+        >
+          Next ▶
+        </button>
+      </div>
     </div>
   );
 };

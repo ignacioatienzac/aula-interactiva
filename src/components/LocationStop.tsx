@@ -21,7 +21,7 @@ const LocationStop = ({
 }: LocationStopProps) => {
   const isClickable = status === "active";
 
-  const circleSize = isStart || isEnd ? "w-16 h-16 text-3xl" : "w-12 h-12 text-xl";
+  const circleSize = isStart || isEnd ? "w-16 h-16 sm:w-20 sm:h-20 text-3xl sm:text-4xl" : "w-12 h-12 sm:w-16 sm:h-16 text-xl sm:text-2xl";
 
   const circleStyle = {
     completed: "bg-heist-green/20 border-heist-green text-heist-green",
@@ -51,7 +51,7 @@ const LocationStop = ({
         {/* Index badge for non-start/end */}
         {!isStart && !isEnd && (
           <span
-            className={`absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center border
+            className={`absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-[11px] font-bold flex items-center justify-center border
               ${status === "completed" ? "bg-heist-green text-black border-heist-green" : ""}
               ${status === "active" ? "bg-heist-gold text-black border-heist-gold" : ""}
               ${status === "locked" ? "bg-gray-700 text-gray-500 border-gray-600" : ""}
@@ -68,7 +68,7 @@ const LocationStop = ({
       </div>
 
       {/* Label */}
-      <div className="text-center max-w-[80px]">
+      <div className="text-center max-w-[80px] sm:max-w-[100px]">
         <p className={`text-[10px] font-bold uppercase tracking-wide leading-tight ${labelStyle}`}>
           {label}
         </p>
