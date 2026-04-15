@@ -181,7 +181,7 @@ const SerEstarHaberInner = ({
 
         {/* Failure overlay */}
         {failReason !== null && (
-          <div className="absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center gap-4 p-6 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] bg-heist-bg/98 flex flex-col items-center justify-center gap-4 p-6 overflow-y-auto">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-red animate-scanner" />
             <p className="text-heist-red text-xs font-bold uppercase tracking-widest">⚠ Alerta de seguridad</p>
             <h2 className="mission-text text-4xl text-heist-red text-center">MISIÓN<br />FALLIDA</h2>
@@ -191,15 +191,15 @@ const SerEstarHaberInner = ({
               <>
                 <p className="text-gray-400 text-sm uppercase tracking-widest text-center">💀 Demasiados errores</p>
                 {failInfo.length > 0 && (
-                  <div className="w-full max-w-md border border-gray-700 p-3 max-h-52 overflow-y-auto">
+                  <div className="w-full max-w-lg border border-gray-700 p-4 overflow-y-auto" style={{ maxHeight: "55vh" }}>
                     <p className="text-heist-gold text-xs font-bold uppercase tracking-widest mb-3 text-center">Tus errores</p>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-4">
                       {failInfo.map((entry, i) => (
-                        <div key={i} className="text-xs border-b border-gray-800 pb-2">
-                          <p className="text-white/70 italic mb-1 text-[11px] leading-snug">
+                        <div key={i} className="border-b border-gray-800 pb-3">
+                          <p className="text-white/70 italic mb-2 text-sm leading-snug">
                             {entry.question.segments.join("___")}
                           </p>
-                          <div className="flex items-center gap-2 pl-1">
+                          <div className="flex items-center gap-3 pl-1 text-sm">
                             <span className="text-heist-red line-through">{entry.given}</span>
                             <span className="text-gray-500">→</span>
                             <span className="text-heist-green font-bold">{entry.question.correct}</span>
@@ -211,7 +211,7 @@ const SerEstarHaberInner = ({
                 )}
               </>
             )}
-            <p className="text-gray-500 text-xs uppercase tracking-wider mt-1">¿Volver a intentarlo?</p>
+            <p className="text-gray-500 text-xs uppercase tracking-wider mt-2">¿Volver a intentarlo?</p>
             <div className="flex gap-4">
               <button onClick={handleRetry} className="px-8 py-3 border-2 border-heist-red text-heist-red font-bold uppercase tracking-widest text-sm hover:bg-heist-red hover:text-black transition-all duration-200">SÍ</button>
               <button onClick={onClose} className="px-8 py-3 border-2 border-gray-600 text-gray-400 font-bold uppercase tracking-widest text-sm hover:border-gray-400 hover:text-white transition-all duration-200">NO</button>
