@@ -4,6 +4,7 @@ import { useGameContext } from "@/context/GameContext";
 import GrammarCategoryChallenge from "@/components/challenges/GrammarCategoryChallenge";
 import MorphologyChallenge from "@/components/challenges/MorphologyChallenge";
 import DeterminantsChallenge from "@/components/challenges/DeterminantsChallenge";
+import NounsChallenge from "@/components/challenges/NounsChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
@@ -179,6 +180,24 @@ const DeterminantsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   );
 };
 
+// ─── Nouns routing ──────────────────────────────────────────────────────────
+const NounsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+
+  const handleComplete = () => {
+    completeChallenge(challenge.stopIndex - 1);
+  };
+
+  return (
+    <NounsChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
 // ─── Main router component ────────────────────────────────────────────────────
 const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   if (challenge.type === "grammar-categories") {
@@ -189,6 +208,9 @@ const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   }
   if (challenge.type === "determinants") {
     return <DeterminantsRouter challenge={challenge} onClose={onClose} />;
+  }
+  if (challenge.type === "nouns") {
+    return <NounsRouter challenge={challenge} onClose={onClose} />;
   }
   return <TextInputModal challenge={challenge} onClose={onClose} />;
 };

@@ -70,9 +70,8 @@ const DeterminantsChallenge = ({
     const wrongCount = newStatuses.filter((s) => s === "wrong").length;
 
     if (wrongCount > 0) {
-      // Lose one life per wrong answer, but cap at available lives
-      const livesLost = Math.min(wrongCount, lives);
-      const remaining = lives - livesLost;
+      // Always lose exactly 1 life per failed attempt, regardless of error count
+      const remaining = lives - 1;
 
       setShaking(true);
       setTimeout(() => setShaking(false), 500);

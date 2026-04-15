@@ -22,7 +22,11 @@ export interface DeterminantsChallenge extends ChallengeBase {
   type: "determinants";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge;
+export interface NounsChallenge extends ChallengeBase {
+  type: "nouns";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -66,9 +70,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 4,
     locationName: "Plaza entre edificios",
     icon: "⛲",
-    type: "text-input",
-    challengeText: "[Reto #4 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "nouns",
   },
   {
     stopIndex: 5,
