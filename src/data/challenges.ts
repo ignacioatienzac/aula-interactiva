@@ -18,7 +18,11 @@ export interface MorphologyChallenge extends ChallengeBase {
   type: "morphology";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge;
+export interface DeterminantsChallenge extends ChallengeBase {
+  type: "determinants";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -56,9 +60,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 3,
     locationName: "Salida exterior CPD",
     icon: "🌳",
-    type: "text-input",
-    challengeText: "[Reto #3 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "determinants",
   },
   {
     stopIndex: 4,

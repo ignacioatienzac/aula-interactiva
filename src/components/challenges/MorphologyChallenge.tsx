@@ -183,21 +183,19 @@ const WordPanel = ({
   );
 };
 
-// ─── Main component ───────────────────────────────────────────────────────────
+// ─── Main component (inner — remounted on retry via key) ─────────────────────
 
-interface Props {
-  locationName: string;
-  icon: string;
-  onComplete: () => void;
-  onClose: () => void;
+interface InnerProps extends Props {
+  onRetry: () => void;
 }
 
-const MorphologyChallenge = ({
+const MorphologyChallengeInner = ({
   locationName,
   icon,
   onComplete,
   onClose,
-}: Props) => {
+  onRetry,
+}: InnerProps) => {
   const [[word0, word1]] = useState<[MorphologyWord, MorphologyWord]>(
     () => pickTwoWords()
   );
@@ -342,10 +340,7 @@ const MorphologyChallenge = ({
   };
 
   const handleRetry = () => {
-    setLives(MAX_STRIKES);
-    setFailReason(null);
-    setFlickering(false);
-    setWordStates([initWordState(), initWordState()]);
+    onRetry();
   };
 
   const lifeDisplay = Array.from(
@@ -363,7 +358,7 @@ const MorphologyChallenge = ({
       <div className="relative w-full max-w-lg sm:max-w-4xl bg-heist-bg border-2 border-heist-red shadow-2xl shadow-heist-red/20 overflow-hidden">
         {/* ── Failure overlay ── */}
         {failReason !== null && (
-          <div className="absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center gap-6 p-6">
+          <div className="absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center gap-4 p-6 overflow-y-auto">
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-red animate-scanner" />
             <p className="text-heist-red text-xs font-bold uppercase tracking-widest">
               ⚠ Alerta de seguridad
@@ -376,7 +371,35 @@ const MorphologyChallenge = ({
             <p className="text-gray-400 text-sm uppercase tracking-widest text-center">
               💀 Demasiados errores
             </p>
-            <p className="text-gray-500 text-xs uppercase tracking-wider">
+
+            {/* Correct answers */}
+            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4 mt-2">
+              {([0, 1] as const).map((wi) => {
+                const w = words[wi];
+                // Show first valid decomposition as the "model" answer
+                const model = w.validDecompositions[0];
+                return (
+                  <div key={wi} className="flex-1 border border-gray-700 p-3">
+                    <p className="text-heist-gold font-bold text-sm mb-2 text-center">{w.word}</p>
+                    <div className="flex flex-col gap-1">
+                      {model.morphemes.map((m, i) => (
+                        <div key={i} className="flex items-center justify-between gap-2 text-xs">
+                          <span className="text-white font-mono tracking-widest">-{m.text}-</span>
+                          <span className="text-gray-400 uppercase tracking-wider">{MORPHEME_TYPE_LABELS[m.type]}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {w.validDecompositions.length > 1 && (
+                      <p className="text-gray-600 text-[10px] mt-2 text-center uppercase tracking-wider">
+                        +{w.validDecompositions.length - 1} opción{w.validDecompositions.length > 2 ? "es" : ""} válida{w.validDecompositions.length > 2 ? "s" : ""} más
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="text-gray-500 text-xs uppercase tracking-wider mt-2">
               ¿Volver a intentarlo?
             </p>
             <div className="flex gap-4">
@@ -453,6 +476,26 @@ const MorphologyChallenge = ({
         </div>
       </div>
     </div>
+  );
+};
+
+// ─── Public wrapper — remounts inner component on retry for fresh words ───────
+
+interface Props {
+  locationName: string;
+  icon: string;
+  onComplete: () => void;
+  onClose: () => void;
+}
+
+const MorphologyChallenge = (props: Props) => {
+  const [retryKey, setRetryKey] = useState(0);
+  return (
+    <MorphologyChallengeInner
+      key={retryKey}
+      {...props}
+      onRetry={() => setRetryKey((k) => k + 1)}
+    />
   );
 };
 
