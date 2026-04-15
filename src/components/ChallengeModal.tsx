@@ -7,6 +7,7 @@ import DeterminantsChallenge from "@/components/challenges/DeterminantsChallenge
 import NounsChallenge from "@/components/challenges/NounsChallenge";
 import AdjectivesChallenge from "@/components/challenges/AdjectivesChallenge";
 import VerbsChallenge from "@/components/challenges/VerbsChallenge";
+import SerEstarHaberChallenge from "@/components/challenges/SerEstarHaberChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
@@ -200,6 +201,24 @@ const NounsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   );
 };
 
+// ─── SerEstarHaber routing ────────────────────────────────────────────────────────────────
+const SerEstarHaberRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+
+  const handleComplete = () => {
+    completeChallenge(challenge.stopIndex - 1);
+  };
+
+  return (
+    <SerEstarHaberChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
 // ─── Verbs routing ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const VerbsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   const { completeChallenge, closeModal } = useGameContext();
@@ -255,6 +274,9 @@ const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   }
   if (challenge.type === "verbs") {
     return <VerbsRouter challenge={challenge} onClose={onClose} />;
+  }
+  if (challenge.type === "ser-estar-haber") {
+    return <SerEstarHaberRouter challenge={challenge} onClose={onClose} />;
   }
   return <TextInputModal challenge={challenge} onClose={onClose} />;
 };
