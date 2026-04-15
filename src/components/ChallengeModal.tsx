@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Challenge } from "@/data/challenges";
 import { useGameContext } from "@/context/GameContext";
 import GrammarCategoryChallenge from "@/components/challenges/GrammarCategoryChallenge";
+import MorphologyChallenge from "@/components/challenges/MorphologyChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
@@ -141,10 +142,31 @@ const TextInputModal = ({ challenge, onClose }: ChallengeModalProps & { challeng
   );
 };
 
+// ─── Morphology routing ──────────────────────────────────────────────────────
+const MorphologyRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+
+  const handleComplete = () => {
+    completeChallenge(challenge.stopIndex - 1);
+  };
+
+  return (
+    <MorphologyChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
 // ─── Main router component ────────────────────────────────────────────────────
 const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   if (challenge.type === "grammar-categories") {
     return <GrammarRouter challenge={challenge} onClose={onClose} />;
+  }
+  if (challenge.type === "morphology") {
+    return <MorphologyRouter challenge={challenge} onClose={onClose} />;
   }
   return <TextInputModal challenge={challenge} onClose={onClose} />;
 };

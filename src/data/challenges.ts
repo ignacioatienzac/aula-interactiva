@@ -14,7 +14,11 @@ export interface GrammarCategoriesChallenge extends ChallengeBase {
   type: "grammar-categories";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge;
+export interface MorphologyChallenge extends ChallengeBase {
+  type: "morphology";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -46,9 +50,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 2,
     locationName: "Recepción CPD",
     icon: "🏢",
-    type: "text-input",
-    challengeText: "[Reto #2 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "morphology",
   },
   {
     stopIndex: 3,
