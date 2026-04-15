@@ -75,8 +75,31 @@ export const ALL_WORDS: WordEntry[] = [
   { word: "Porque",  category: "conjunción" },
 ];
 
-/** Returns n words chosen at random from ALL_WORDS (no repeats). */
+/**
+ * Returns n words guaranteeing at least one from every category.
+ * The 8 categories are always represented; remaining slots are filled
+ * with random picks from the leftover pool. Result is shuffled.
+ */
 export function pickRandomWords(n: number): WordEntry[] {
-  const shuffled = [...ALL_WORDS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(n, shuffled.length));
+  const categories = Object.keys(CATEGORY_LABELS) as GrammarCategory[];
+
+  // Step 1: pick one random word from each category (8 guaranteed)
+  const byCategory: Record<GrammarCategory, WordEntry[]> = {} as never;
+  for (const cat of categories) {
+    byCategory[cat] = ALL_WORDS.filter((w) => w.category === cat);
+  }
+
+  const guaranteed: WordEntry[] = categories.map((cat) => {
+    const pool = byCategory[cat];
+    return pool[Math.floor(Math.random() * pool.length)];
+  });
+
+  // Step 2: fill remaining slots from ALL_WORDS (excluding already chosen)
+  const chosen = new Set(guaranteed);
+  const leftover = ALL_WORDS.filter((w) => !chosen.has(w))
+    .sort(() => Math.random() - 0.5)
+    .slice(0, Math.max(0, n - categories.length));
+
+  // Step 3: merge and shuffle
+  return [...guaranteed, ...leftover].sort(() => Math.random() - 0.5);
 }

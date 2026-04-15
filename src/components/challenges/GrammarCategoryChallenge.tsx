@@ -68,7 +68,6 @@ const GrammarCategoryChallenge = ({ locationName, icon, onComplete, onClose }: P
       // Correct
       const next = currentIndex + 1;
       setCurrentIndex(next);
-      setWrongCount(0);
       if (next >= TOTAL_WORDS) {
         // All done — small delay so the last word is visible
         setTimeout(() => onComplete(), 400);
