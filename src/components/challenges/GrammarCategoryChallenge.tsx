@@ -113,7 +113,7 @@ const GrammarCategoryChallenge = ({ locationName, icon, onComplete, onClose }: P
         <div className="absolute inset-0 z-10 bg-black animate-flicker pointer-events-none" />
       )}
 
-      <div className="relative w-full max-w-lg bg-heist-bg border-2 border-heist-red shadow-2xl shadow-heist-red/20 overflow-hidden">
+      <div className="relative w-full max-w-lg sm:max-w-4xl bg-heist-bg border-2 border-heist-red shadow-2xl shadow-heist-red/20 overflow-hidden">
 
         {/* Failure overlay */}
         {failReason !== null && (
@@ -204,7 +204,7 @@ const GrammarCategoryChallenge = ({ locationName, icon, onComplete, onClose }: P
         {/* Word display */}
         <div className="flex items-center justify-center px-4 py-8">
           {currentWord && (
-            <p className="mission-text text-5xl sm:text-6xl text-heist-gold text-center">
+            <p className="mission-text text-5xl text-heist-gold text-center">
               {currentWord.word}
             </p>
           )}
