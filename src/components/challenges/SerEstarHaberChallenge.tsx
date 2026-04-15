@@ -167,22 +167,11 @@ const SerEstarHaberInner = ({
         <div className="absolute inset-0 z-10 bg-black animate-flicker pointer-events-none" />
       )}
 
-      <div className="relative w-full max-w-lg sm:max-w-2xl bg-heist-bg border-2 border-heist-red shadow-2xl shadow-heist-red/20 overflow-hidden">
-
-        {/* Success overlay */}
-        {currentIndex >= QUESTION_COUNT && !failReason && (
-          <div className="absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center gap-4">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-green" />
-            <p className="text-heist-green text-xs font-bold uppercase tracking-widest">✓ Operación completada</p>
-            <h2 className="mission-text text-4xl text-heist-green text-center">MISIÓN<br />COMPLETADA</h2>
-            <p className="text-gray-500 text-xs uppercase tracking-widest animate-pulse">Avanzando...</p>
-          </div>
-        )}
-
-        {/* Failure overlay */}
-        {failReason !== null && (
-          <div className="fixed inset-0 z-[100] bg-heist-bg/98 flex flex-col items-center justify-center gap-4 p-6 overflow-y-auto">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-red animate-scanner" />
+      {/* Failure overlay — sibling of the card, outside overflow-hidden */}
+      {failReason !== null && (
+        <div className="absolute inset-0 z-20 bg-heist-bg flex flex-col items-center justify-start gap-4 p-8 overflow-y-auto">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-red animate-scanner" />
+          <div className="flex flex-col items-center gap-4 w-full max-w-lg mx-auto mt-4">
             <p className="text-heist-red text-xs font-bold uppercase tracking-widest">⚠ Alerta de seguridad</p>
             <h2 className="mission-text text-4xl text-heist-red text-center">MISIÓN<br />FALLIDA</h2>
             {failReason === "time" ? (
@@ -191,7 +180,7 @@ const SerEstarHaberInner = ({
               <>
                 <p className="text-gray-400 text-sm uppercase tracking-widest text-center">💀 Demasiados errores</p>
                 {failInfo.length > 0 && (
-                  <div className="w-full max-w-lg border border-gray-700 p-4 overflow-y-auto" style={{ maxHeight: "55vh" }}>
+                  <div className="w-full border border-gray-700 p-4 overflow-y-auto" style={{ maxHeight: "50vh" }}>
                     <p className="text-heist-gold text-xs font-bold uppercase tracking-widest mb-3 text-center">Tus errores</p>
                     <div className="flex flex-col gap-4">
                       {failInfo.map((entry, i) => (
@@ -216,6 +205,19 @@ const SerEstarHaberInner = ({
               <button onClick={handleRetry} className="px-8 py-3 border-2 border-heist-red text-heist-red font-bold uppercase tracking-widest text-sm hover:bg-heist-red hover:text-black transition-all duration-200">SÍ</button>
               <button onClick={onClose} className="px-8 py-3 border-2 border-gray-600 text-gray-400 font-bold uppercase tracking-widest text-sm hover:border-gray-400 hover:text-white transition-all duration-200">NO</button>
             </div>
+          </div>
+        </div>
+      )}
+
+      <div className="relative w-full max-w-lg sm:max-w-2xl bg-heist-bg border-2 border-heist-red shadow-2xl shadow-heist-red/20 overflow-hidden">
+
+        {/* Success overlay */}
+        {currentIndex >= QUESTION_COUNT && !failReason && (
+          <div className="absolute inset-0 z-20 bg-black/95 flex flex-col items-center justify-center gap-4">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-heist-green" />
+            <p className="text-heist-green text-xs font-bold uppercase tracking-widest">✓ Operación completada</p>
+            <h2 className="mission-text text-4xl text-heist-green text-center">MISIÓN<br />COMPLETADA</h2>
+            <p className="text-gray-500 text-xs uppercase tracking-widest animate-pulse">Avanzando...</p>
           </div>
         )}
 
