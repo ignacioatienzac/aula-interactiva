@@ -11,8 +11,8 @@ interface Props {
 }
 
 interface SlotState {
-  /** token currently dropped in this slot, or null */
-  filled: string | null;
+  /** index into tokens[] of the chip placed here, or null */
+  filledIndex: number | null;
   /** flash state for feedback */
   flash: "correct" | "wrong" | null;
 }
@@ -21,19 +21,21 @@ interface SlotState {
 
 const TokenChip = ({
   token,
+  tokenIndex,
   used,
   onDragStart,
   onTouchStart,
 }: {
   token: string;
+  tokenIndex: number;
   used: boolean;
-  onDragStart: (t: string, e: React.DragEvent) => void;
-  onTouchStart: (t: string, e: React.TouchEvent) => void;
+  onDragStart: (idx: number, e: React.DragEvent) => void;
+  onTouchStart: (idx: number, e: React.TouchEvent) => void;
 }) => (
   <div
     draggable={!used}
-    onDragStart={(e) => !used && onDragStart(token, e)}
-    onTouchStart={(e) => !used && onTouchStart(token, e)}
+    onDragStart={(e) => !used && onDragStart(tokenIndex, e)}
+    onTouchStart={(e) => !used && onTouchStart(tokenIndex, e)}
     className={`px-4 py-2 border-2 text-sm font-bold uppercase tracking-wide select-none transition-all duration-150 ${
       used
         ? "border-gray-700 text-gray-700 cursor-default opacity-40"
@@ -49,23 +51,23 @@ const TokenChip = ({
 const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
   const [{ sentences, tokens }] = useState(() => pickPart1());
   const [slots, setSlots] = useState<SlotState[]>(() =>
-    Array(5).fill(null).map(() => ({ filled: null, flash: null }))
+    Array(5).fill(null).map(() => ({ filledIndex: null, flash: null }))
   );
   const [lives, setLives] = useState(MAX_STRIKES);
   const [checked, setChecked] = useState(false);
   const [allCorrect, setAllCorrect] = useState(false);
 
-  // Tokens used = those currently placed in any slot
-  const usedTokens = new Set(slots.map((s) => s.filled).filter(Boolean) as string[]);
+  // Tokens used = indices of chips currently placed in any slot
+  const usedIndices = new Set(slots.map((s) => s.filledIndex).filter((v) => v !== null) as number[]);
 
   // ── Drag-and-drop (pointer/mouse) ─────────────────────────────────────────
 
-  const dragTokenRef = useRef<string | null>(null);
+  const dragTokenRef = useRef<number | null>(null);
 
-  const handleDragStart = (token: string, e: React.DragEvent) => {
-    dragTokenRef.current = token;
+  const handleDragStart = (idx: number, e: React.DragEvent) => {
+    dragTokenRef.current = idx;
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", token);
+    e.dataTransfer.setData("text/plain", String(idx));
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -75,18 +77,20 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
 
   const handleDrop = (slotIndex: number, e: React.DragEvent) => {
     e.preventDefault();
-    const token = e.dataTransfer.getData("text/plain") || dragTokenRef.current;
-    if (!token) return;
-    placeToken(slotIndex, token);
+    const raw = e.dataTransfer.getData("text/plain");
+    const tokenIdx = raw !== "" ? parseInt(raw) : dragTokenRef.current;
+    if (tokenIdx === null || tokenIdx === undefined || isNaN(tokenIdx as number)) return;
+    placeToken(slotIndex, tokenIdx as number);
   };
 
   // ── Touch drag (mobile) ───────────────────────────────────────────────────
 
-  const touchTokenRef = useRef<string | null>(null);
+  const touchTokenRef = useRef<number | null>(null);
   const ghostRef = useRef<HTMLDivElement | null>(null);
 
-  const handleTouchStart = (token: string, e: React.TouchEvent) => {
-    touchTokenRef.current = token;
+  const handleTouchStart = (idx: number, e: React.TouchEvent) => {
+    touchTokenRef.current = idx;
+    const token = tokens[idx];
     // Create a ghost element that follows the finger
     const ghost = document.createElement("div");
     ghost.textContent = token;
@@ -118,8 +122,8 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (!touchTokenRef.current) return;
-      const token = touchTokenRef.current;
+      if (touchTokenRef.current === null) return;
+      const tokenIdx = touchTokenRef.current;
       touchTokenRef.current = null;
 
       // Remove ghost
@@ -132,7 +136,7 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
       const slotEl = el?.closest("[data-slot-index]");
       if (slotEl) {
         const idx = parseInt((slotEl as HTMLElement).dataset.slotIndex ?? "-1");
-        if (idx >= 0) placeToken(idx, token);
+        if (idx >= 0) placeToken(idx, tokenIdx);
       }
     };
 
@@ -147,15 +151,15 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
 
   // ── Place & remove tokens ─────────────────────────────────────────────────
 
-  const placeToken = (slotIndex: number, token: string) => {
+  const placeToken = (slotIndex: number, tokenIdx: number) => {
     if (checked) return;
     setSlots((prev) => {
       const next = prev.map((s) => ({ ...s }));
-      // If token already lives in another slot, clear it first
+      // If this exact chip index is already in another slot, clear it first
       for (let i = 0; i < next.length; i++) {
-        if (next[i].filled === token) next[i].filled = null;
+        if (next[i].filledIndex === tokenIdx) next[i].filledIndex = null;
       }
-      next[slotIndex].filled = token;
+      next[slotIndex].filledIndex = tokenIdx;
       return next;
     });
   };
@@ -164,7 +168,7 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
     if (checked) return;
     setSlots((prev) => {
       const next = prev.map((s) => ({ ...s }));
-      next[slotIndex].filled = null;
+      next[slotIndex].filledIndex = null;
       return next;
     });
   };
@@ -173,12 +177,13 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
 
   const handleCheck = () => {
     if (checked) return;
-    const allFilled = slots.every((s) => s.filled !== null);
+    const allFilled = slots.every((s) => s.filledIndex !== null);
     if (!allFilled) return;
 
     let wrongCount = 0;
     const newSlots = slots.map((slot, i) => {
-      const correct = slot.filled === sentences[i].correct;
+      const filledText = slot.filledIndex !== null ? tokens[slot.filledIndex] : null;
+      const correct = filledText === sentences[i].correct;
       if (!correct) wrongCount++;
       return { ...slot, flash: correct ? ("correct" as const) : ("wrong" as const) };
     });
@@ -194,18 +199,17 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
       // After 1s, clear wrong slots and let player retry
       setTimeout(() => {
         setSlots((prev) =>
-          prev.map((s) => (s.flash === "wrong" ? { filled: null, flash: null } : { ...s, flash: null }))
+          prev.map((s) => (s.flash === "wrong" ? { filledIndex: null, flash: null } : { ...s, flash: null }))
         );
         setChecked(false);
         if (newLives <= 0) {
-          // Redirect to game over — signal parent via onClose (no retry here)
           onClose();
         }
       }, 1200);
     }
   };
 
-  const allFilled = slots.every((s) => s.filled !== null);
+  const allFilled = slots.every((s) => s.filledIndex !== null);
   const lifeDisplay = Array.from({ length: MAX_STRIKES }, (_, i) => i < lives);
 
   return (
@@ -248,9 +252,10 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
           <div className="flex flex-wrap gap-2">
             {tokens.map((token, i) => (
               <TokenChip
-                key={`${token}-${i}`}
+                key={i}
                 token={token}
-                used={usedTokens.has(token)}
+                tokenIndex={i}
+                used={usedIndices.has(i)}
                 onDragStart={handleDragStart}
                 onTouchStart={handleTouchStart}
               />
@@ -262,12 +267,13 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
         <div className="overflow-y-auto flex-1 px-4 py-3 flex flex-col gap-4">
           {sentences.map((s: Part1Sentence, i: number) => {
             const slot = slots[i];
+            const filledText = slot.filledIndex !== null ? tokens[slot.filledIndex] : null;
             const slotCls = `inline-flex items-center justify-center min-w-[7rem] px-3 py-1 border-b-2 mx-1 text-sm font-bold transition-all duration-200 cursor-pointer select-none ${
               slot.flash === "correct"
                 ? "border-heist-green text-heist-green bg-heist-green/10"
                 : slot.flash === "wrong"
                 ? "border-heist-red text-heist-red bg-heist-red/10 animate-shake"
-                : slot.filled
+                : filledText
                 ? "border-heist-gold text-heist-gold"
                 : "border-gray-600 text-gray-500"
             }`;
@@ -280,10 +286,10 @@ const Part1Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
                   className={slotCls}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(i, e)}
-                  onClick={() => slot.filled && clearSlot(i)}
-                  title={slot.filled ? "Clic para quitar" : "Suelta aquí"}
+                  onClick={() => filledText && clearSlot(i)}
+                  title={filledText ? "Clic para quitar" : "Suelta aquí"}
                 >
-                  {slot.filled ?? "— — —"}
+                  {filledText ?? "— — —"}
                 </span>
                 {s.after && <span className="ml-1">{s.after}</span>}
               </div>
