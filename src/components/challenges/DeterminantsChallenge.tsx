@@ -129,25 +129,6 @@ const DeterminantsChallenge = ({
               💀 Demasiados errores
             </p>
 
-            {/* Show all correct answers */}
-            <div className="w-full max-w-2xl border border-gray-700 p-4">
-              <p className="text-heist-gold text-xs font-bold uppercase tracking-widest mb-3 text-center">
-                Respuestas correctas
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {blanks.map((blank) => (
-                  <div key={blank.id} className="text-xs flex flex-col gap-0.5">
-                    <span className="text-gray-500 uppercase tracking-wider">
-                      ({blank.hint})
-                    </span>
-                    <span className="text-heist-gold font-bold font-mono">
-                      {blank.accepted.join(" / ")}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             <p className="text-gray-500 text-xs uppercase tracking-wider">
               ¿Volver a intentarlo?
             </p>
