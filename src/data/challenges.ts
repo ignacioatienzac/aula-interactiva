@@ -38,7 +38,11 @@ export interface SerEstarHaberChallenge extends ChallengeBase {
   type: "ser-estar-haber";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge;
+export interface LosUsosDeLoChallenge extends ChallengeBase {
+  type: "los-usos-de-lo";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge | LosUsosDeLoChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -106,9 +110,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 8,
     locationName: "Ascensor CRT",
     icon: "🛗",
-    type: "text-input",
-    challengeText: "[Reto #8 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "los-usos-de-lo",
   },
   {
     stopIndex: 9,
