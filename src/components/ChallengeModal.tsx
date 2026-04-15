@@ -6,6 +6,7 @@ import MorphologyChallenge from "@/components/challenges/MorphologyChallenge";
 import DeterminantsChallenge from "@/components/challenges/DeterminantsChallenge";
 import NounsChallenge from "@/components/challenges/NounsChallenge";
 import AdjectivesChallenge from "@/components/challenges/AdjectivesChallenge";
+import VerbsChallenge from "@/components/challenges/VerbsChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
@@ -199,6 +200,24 @@ const NounsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   );
 };
 
+// ─── Verbs routing ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+const VerbsRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+
+  const handleComplete = () => {
+    completeChallenge(challenge.stopIndex - 1);
+  };
+
+  return (
+    <VerbsChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
 // ─── Adjectives routing ──────────────────────────────────────────────────────
 const AdjectivesRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   const { completeChallenge, closeModal } = useGameContext();
@@ -233,6 +252,9 @@ const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   }
   if (challenge.type === "adjectives") {
     return <AdjectivesRouter challenge={challenge} onClose={onClose} />;
+  }
+  if (challenge.type === "verbs") {
+    return <VerbsRouter challenge={challenge} onClose={onClose} />;
   }
   return <TextInputModal challenge={challenge} onClose={onClose} />;
 };

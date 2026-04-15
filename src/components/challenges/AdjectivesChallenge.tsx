@@ -42,13 +42,11 @@ const AdjectivesChallengeInner = ({
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  // Scroll to solucionario after success
+  // Scroll to solucionario after success (no auto-close)
   useEffect(() => {
     if (succeeded) {
       const t = setTimeout(() => {
         solucionarioRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        const successT = setTimeout(() => onCompleteRef.current(), 800);
-        return () => clearTimeout(successT);
       }, 300);
       return () => clearTimeout(t);
     }
@@ -293,6 +291,12 @@ const AdjectivesChallengeInner = ({
                   );
                 })}
               </ol>
+              <button
+                onClick={() => onCompleteRef.current()}
+                className="mt-5 w-full py-2.5 border-2 border-heist-green bg-heist-green/10 text-heist-green font-bold uppercase tracking-widest text-sm hover:bg-heist-green hover:text-black transition-all duration-200"
+              >
+                ▶ Continuar
+              </button>
             </div>
           )}
         </div>

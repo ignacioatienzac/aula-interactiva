@@ -30,7 +30,11 @@ export interface AdjectivesChallenge extends ChallengeBase {
   type: "adjectives";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge;
+export interface VerbsChallenge extends ChallengeBase {
+  type: "verbs";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -86,9 +90,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 6,
     locationName: "Entrada edificio CRT",
     icon: "🏛️",
-    type: "text-input",
-    challengeText: "[Reto #6 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "verbs",
   },
   {
     stopIndex: 7,
