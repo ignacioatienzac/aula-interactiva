@@ -75,6 +75,7 @@ export const EXERCISES: Exercise[] = [
     accepted: [
       "Aunque no tenía mucha hambre, se comió la pizza entera de Román.",
       "Se comió la pizza entera de Román aunque no tenía mucha hambre.",
+      "No tenía mucha hambre, aunque se comió la pizza entera de Román.",
     ],
   },
   {
@@ -107,6 +108,8 @@ export const EXERCISES: Exercise[] = [
     accepted: [
       "Si tuviera más vacaciones, viajaría a España para ver a mi familia.",
       "Viajaría a España para ver a mi familia si tuviera más vacaciones.",
+      "Si tuviese más vacaciones, viajaría a España para ver a mi familia.",
+      "Viajaría a España para ver a mi familia si tuviese más vacaciones.",
     ],
   },
   {
@@ -152,11 +155,13 @@ export const EXERCISES: Exercise[] = [
   {
     id: 13, level: 3,
     levelLabel: "Relativos con Preposición y Condicionales 3",
-    sources: ["No me dijiste la verdad.", "Me enfadé mucho."],
+    sources: ["No me dijiste la verdad.", "Me enfadé contigo."],
     hint: "Usa «si» con pluscuamperfecto de subjuntivo + condicional compuesto",
     accepted: [
-      "Si me hubieras dicho la verdad, no me habría enfadado tanto contigo.",
-      "No me habría enfadado tanto contigo si me hubieras dicho la verdad.",
+      "Si me hubieras dicho la verdad, no me habría enfadado contigo.",
+      "Si me hubieses dicho la verdad, no me habría enfadado contigo.",
+      "No me habría enfadado contigo si me hubieras dicho la verdad.",
+      "No me habría enfadado contigo si me hubieses dicho la verdad.",
     ],
   },
   {
@@ -180,6 +185,8 @@ export const EXERCISES: Exercise[] = [
     accepted: [
       "Si hubiera hecho sol el domingo, habríamos ido a la yincana con los estudiantes.",
       "Habríamos ido a la yincana con los estudiantes si hubiera hecho sol el domingo.",
+      "Si hubiera hecho sol, habríamos ido a la yincana con los estudiantes el domingo.",
+      "Habríamos ido a la yincana con los estudiantes el domingo si hubiera hecho sol.",
     ],
   },
   {
