@@ -8,6 +8,22 @@ import {
 
 const MAX_STRIKES = 3;
 
+/** Split text on the first standalone «lo»/«Lo» and wrap it in bold gold. */
+function renderBoldLo(text: string): React.ReactNode {
+  const match = text.match(/\blo\b/i);
+  if (!match || match.index === undefined) return text;
+  const before = text.slice(0, match.index);
+  const lo = match[0];
+  const after = text.slice(match.index + lo.length);
+  return (
+    <>
+      {before}
+      <strong className="font-extrabold text-heist-gold">{lo}</strong>
+      {after}
+    </>
+  );
+}
+
 interface Props {
   locationName: string;
   icon: string;
@@ -98,7 +114,7 @@ const Part2Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
                 <div className="flex flex-col gap-4">
                   {failInfo.map((entry, i) => (
                     <div key={i} className="border-b border-gray-800 pb-3">
-                      <p className="text-white/70 italic mb-2 text-sm leading-snug">{entry.sentence.text}</p>
+                      <p className="text-white/70 italic mb-2 text-sm leading-snug">{renderBoldLo(entry.sentence.text)}</p>
                       <div className="flex items-center gap-3 pl-1 text-sm">
                         <span className="text-heist-red line-through">
                           {entry.given === "pronombre" ? "Pronombre de OD" : "Artículo neutro"}
@@ -171,7 +187,7 @@ const Part2Challenge = ({ locationName, icon, onComplete, onClose }: Props) => {
         <div className="flex items-center justify-center px-6 py-6 min-h-[120px]">
           {currentQ && (
             <p className="text-white text-lg sm:text-xl text-center leading-relaxed font-medium">
-              {currentQ.text}
+              {renderBoldLo(currentQ.text)}
             </p>
           )}
         </div>

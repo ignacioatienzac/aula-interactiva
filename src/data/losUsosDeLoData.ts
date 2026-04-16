@@ -94,7 +94,7 @@ export const PART2_POOL: Part2Sentence[] = [
   { id: 16, text: "Lo esencial es invisible a los ojos.",                                          correct: "articulo" },
   { id: 17, text: "El regalo de boda ya lo tenemos preparado.",                                    correct: "pronombre" },
   { id: 18, text: "¡Mira lo alto que está el niño! Ha crecido muchísimo.",                        correct: "articulo" },
-  { id: 19, text: "Si tienes el código del juego, pásamelo por correo electrónico.",              correct: "pronombre" },
+  { id: 19, text: "Si tienes el código del juego, pásalo por correo electrónico.",                correct: "pronombre" },
   { id: 20, text: "No entiendo lo complicado que es este ejercicio de gramática.",                 correct: "articulo" },
 ];
 
