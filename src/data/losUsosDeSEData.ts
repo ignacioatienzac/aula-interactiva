@@ -21,7 +21,7 @@ export const SE_TYPE_LABELS: Record<SeType, string> = {
   reflexivo:  "Reflexivo",
   reciproco:  "Recíproco",
   cambio:     "Cambio de estado",
-  oi:         "Sustituto de le/les",
+  oi:         "Pronombre OI",
   ingestion:  "Verbos de ingestión",
   impersonal: "Impersonal",
   pasiva:     "Pasiva refleja",

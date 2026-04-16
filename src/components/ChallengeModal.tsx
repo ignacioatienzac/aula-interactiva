@@ -10,6 +10,7 @@ import VerbsChallenge from "@/components/challenges/VerbsChallenge";
 import SerEstarHaberChallenge from "@/components/challenges/SerEstarHaberChallenge";
 import LosUsosDeLoChallenge from "@/components/challenges/LosUsosDeLoChallenge";
 import SeChallenge from "@/components/challenges/SeChallenge";
+import MisionDiezChallenge from "@/components/challenges/MisionDiezChallenge";
 
 interface ChallengeModalProps {
   challenge: Challenge;
@@ -285,6 +286,20 @@ const SeRouter = ({ challenge, onClose }: ChallengeModalProps) => {
   );
 };
 
+// ─── MisionDiez routing ──────────────────────────────────────────────
+const MisionDiezRouter = ({ challenge, onClose }: ChallengeModalProps) => {
+  const { completeChallenge, closeModal } = useGameContext();
+  const handleComplete = () => { completeChallenge(challenge.stopIndex - 1); };
+  return (
+    <MisionDiezChallenge
+      locationName={challenge.locationName}
+      icon={challenge.icon}
+      onComplete={handleComplete}
+      onClose={() => { closeModal(); onClose(); }}
+    />
+  );
+};
+
 // ─── Main router component ────────────────────────────────────────────────────
 const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   if (challenge.type === "grammar-categories") {
@@ -313,6 +328,9 @@ const ChallengeModal = ({ challenge, onClose }: ChallengeModalProps) => {
   }
   if (challenge.type === "usos-del-se") {
     return <SeRouter challenge={challenge} onClose={onClose} />;
+  }
+  if (challenge.type === "mision-diez") {
+    return <MisionDiezRouter challenge={challenge} onClose={onClose} />;
   }
   return <TextInputModal challenge={challenge} onClose={onClose} />;
 };

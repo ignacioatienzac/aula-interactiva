@@ -46,7 +46,11 @@ export interface LosUsosDeSeChallenge extends ChallengeBase {
   type: "usos-del-se";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge | LosUsosDeLoChallenge | LosUsosDeSeChallenge;
+export interface MisionDiezChallenge extends ChallengeBase {
+  type: "mision-diez";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge | LosUsosDeLoChallenge | LosUsosDeSeChallenge | MisionDiezChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -126,8 +130,6 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 10,
     locationName: "Puerta CRT-5.22",
     icon: "🔐",
-    type: "text-input",
-    challengeText: "[Reto #10 por definir — el último obstáculo antes de entrar]",
-    correctAnswer: "[respuesta]",
+    type: "mision-diez",
   },
 ];
