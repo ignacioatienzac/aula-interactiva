@@ -42,7 +42,11 @@ export interface LosUsosDeLoChallenge extends ChallengeBase {
   type: "los-usos-de-lo";
 }
 
-export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge | LosUsosDeLoChallenge;
+export interface LosUsosDeSeChallenge extends ChallengeBase {
+  type: "usos-del-se";
+}
+
+export type Challenge = TextInputChallenge | GrammarCategoriesChallenge | MorphologyChallenge | DeterminantsChallenge | NounsChallenge | AdjectivesChallenge | VerbsChallenge | SerEstarHaberChallenge | LosUsosDeLoChallenge | LosUsosDeSeChallenge;
 
 // stopIndex 0 = CPD-LG.35 (inicio, sin reto)
 // stopIndex 11 = CRT-5.22 (final, sin reto)
@@ -116,9 +120,7 @@ export const CHALLENGES: Challenge[] = [
     stopIndex: 9,
     locationName: "Pasillo piso 5",
     icon: "🔦",
-    type: "text-input",
-    challengeText: "[Reto #9 por definir]",
-    correctAnswer: "[respuesta]",
+    type: "usos-del-se",
   },
   {
     stopIndex: 10,
