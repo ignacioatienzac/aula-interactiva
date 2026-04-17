@@ -191,7 +191,7 @@ const EscapeMap = () => {
       )}
 
       {/* DEV: prev/next navigation buttons — hidden on mobile */}
-      <div className="hidden fixed bottom-6 right-6 z-40 items-center gap-2">
+      <div className="hidden sm:flex fixed bottom-6 right-6 z-40 items-center gap-2">
         <span className="text-[9px] text-gray-600 uppercase tracking-widest mr-1">DEV</span>
         <button
           onClick={() => debugSetStop(currentStop - 1)}
